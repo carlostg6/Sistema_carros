@@ -3,11 +3,15 @@ import axios from "axios";
 import { Pro } from "../api/Producto";
 import useAuth from "./hooks/useAuth";
 import TextLinkExample from "./TextLinkExample";
+const URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000/"; 
 
-export const Register = () => {
+
+ const Register = () => {
+  const { auth } = useAuth();
   const [category, setCategory] = useState([]);
   const [category1, setCategory1] = useState([]);
   const [category2, setCategory2] = useState([]);
+
 
   const [form, setForm] = useState({
     name: "",
@@ -22,7 +26,7 @@ export const Register = () => {
   const categoria = async () => {
     try {
       const url = await axios.get(
-        "http://127.0.0.1:8000/products/status/category"
+        `${URL}/products/status/category`
       );
       const resultado = url;
       setCategory(resultado.data.resultado);
@@ -31,7 +35,7 @@ export const Register = () => {
   const categoria1 = async () => {
     try {
       const url = await axios.get(
-        "http://127.0.0.1:8000/products/status/model"
+        `${URL}/products/status/model`
       );
       const resultado = url;
       setCategory1(resultado.data.resultado);
@@ -40,7 +44,7 @@ export const Register = () => {
   const categoria2 = async () => {
     try {
       const url = await axios.get(
-        "http://127.0.0.1:8000/products/status"
+        `${URL}/products/status`
       );
       const resultado = url;
       setCategory2(resultado.data.resultado);
@@ -101,7 +105,8 @@ export const Register = () => {
  
   return (
     <>
-    <TextLinkExample />
+      <TextLinkExample />
+      <h1 className="text-3xl font-bold ">hola {auth.username}</h1>
       <div className="max-w-sm p-6 bg-black border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-100 dark:text-white">
           Crear Producto
@@ -279,3 +284,4 @@ export const Register = () => {
     </>
   );
 };
+export default Register;
